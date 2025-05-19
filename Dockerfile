@@ -15,10 +15,14 @@ COPY package*.json ./
 # COPY package.json ./
 
 # 4. Install your application's dependencies
+# Enable corepack to use yarn
+RUN corepack enable
 # If you use npm:
-RUN npm install
+# RUN npm install
 # If you use yarn:
-# RUN yarn install --frozen-lockfile
+COPY yarn.lock ./ # Make sure yarn.lock is in your repository
+COPY package.json ./ # yarn needs package.json too
+RUN yarn install --frozen-lockfile
 
 # 5. Copy the rest of your application's code into the container
 COPY . .
@@ -30,6 +34,6 @@ EXPOSE 3000
 # 7. Define the command to run your application
 # This is what Docker will run when the container starts.
 # Replace 'node server.js' or 'npm start' with your actual start command.
-CMD [ "npm", "start" ]
+CMD [ "npx", "nx", "start", "twenty-server" ]
 # Or if you run directly with node:
 # CMD [ "node", "your-main-script.js" ] 
