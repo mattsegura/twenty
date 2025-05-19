@@ -29,6 +29,9 @@ RUN corepack enable
 # COPY package.json ./ # yarn needs package.json too
 RUN yarn install --frozen-lockfile
 
+# Build the frontend application
+RUN npx nx build twenty-front
+
 # 5. Copy the rest of your application's code into the container
 COPY . .
 
